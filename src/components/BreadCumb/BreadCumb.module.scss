@@ -1,0 +1,19 @@
+.breadcumb {
+    display: flex;
+    padding: 10px 0;
+}
+
+.breadcumb-item {
+    font-size: 14px;
+    color: #808089;
+}
+.breadcumb-item:last-child {
+    color: #38383d;
+}
+.icon-next {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5px;
+    margin-right: 8px;
+}

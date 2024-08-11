@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { publicRoutes } from '~/routes';
+import * as productService from '~/services/ProductServices';
+import { useEffect, useState } from 'react';
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [productResult, setProductResult] = useState([]);
+    useEffect(() => {
+        const fetchApi = async () => {
+            const result = await productService.product();
+            setProductResult(result.data);
+        };
+        fetchApi();
+    }, []);
+    return (
+        <Router>
+            <div className="App">
+                <Routes>
+                    {publicRoutes.map((route, index) => {
+                        const Page = route.component;
+                        if (route.books) {
+                            return <Route key={index} path={route.path} element={<Page books={productResult} />} />;
+                        }
+                        return <Route key={index} path={route.path} element={<Page />} />;
+                    })}
+                </Routes>
+            </div>
+        </Router>
+    );
 }
 
 export default App;
