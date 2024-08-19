@@ -1,14 +1,12 @@
 .custom-container {
-    max-width: 1392px; /* Chỉnh lại theo kích thước bạn muốn */
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-bottom: 60px;
+    max-width: 1440px; /* Chỉnh lại theo kích thước bạn muốn */
+    margin: 0 auto;
+    padding: 0 15px 60px;
 }
 .main {
     display: flex;
     gap: 24px;
+    justify-content: space-between;
 }
 .sidebar {
     display: flex;
@@ -153,6 +151,7 @@
     margin-left: 4px;
 }
 .author-link {
+    margin-left: 4px;
     color: #0d5cb6;
 }
 .title {
@@ -167,9 +166,12 @@
     display: flex;
     align-items: center;
 }
-
+.star {
+    padding-bottom: 3px;
+}
 .rating-wrapper {
     display: flex;
+    align-items: center;
     gap: 6px;
     font-size: 1.4rem;
     .rating-average {
@@ -275,6 +277,10 @@
         line-height: 21px;
         word-break: break-word;
     }
+
+    ul {
+        padding: 0;
+    }
 }
 // Pay
 
@@ -328,9 +334,6 @@
         width: 34px;
         background-color: #fff;
     }
-    .minus {
-        opacity: 0.2;
-    }
 }
 
 .group-button {
@@ -358,4 +361,8 @@
         color: var(--primary);
         background-color: #fff;
     }
+}
+
+.isDisabled {
+    opacity: 0.2;
 }

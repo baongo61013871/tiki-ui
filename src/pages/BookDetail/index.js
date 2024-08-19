@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faMinus, faPlus, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './BookDetail.module.scss';
 import Header from '~/components/Header';
@@ -10,17 +10,20 @@ import request from '~/utils/request';
 import images from '~/assets/images';
 import { formatCurrency } from '~/utils';
 import Footer from '~/components/Footer';
-import BreadCumb from '~/components/BreadCumb';
-
+import StarRating from '~/components/StarRating';
 const cx = classNames.bind(styles);
 
 function BookDetail({ books }) {
-    const [bookDetailResult, setBookDetailResult] = useState({});
     const { id } = useParams();
     const book = books.find((b) => b.id === parseInt(id));
+    const [bookDetailResult, setBookDetailResult] = useState({});
+    const [price, setPrice] = useState(0);
+    const [quantity, setQuantity] = useState(1);
+    const [isDisabled, setIsDisabled] = useState(true);
     const authIcon = bookDetailResult?.badges_new?.find((item) => {
         return item.placement === 'left_brand';
     });
+    const intialPrice = useRef(0);
 
     useEffect(() => {
         const fetchApi = async () => {
@@ -33,7 +36,10 @@ function BookDetail({ books }) {
                 }
             };
             const result = await getDetail();
+
             setBookDetailResult(result);
+            setPrice(result.price);
+            intialPrice.current = result.price;
         };
         fetchApi();
     }, [id]);
@@ -41,14 +47,65 @@ function BookDetail({ books }) {
     if (!book) {
         return <h2>Không tìm thấy sách!</h2>;
     }
-    console.log('checkbook', book);
+
+    const updatePrice = () => {
+        setPrice((prevPrice) => {
+            const newPrice = prevPrice + intialPrice.current; // Tính toán giá trị mới của price
+
+            // Nếu `newPrice` lớn hơn `intialPrice.current` và `quantity > 1`, nút sẽ không bị vô hiệu hóa
+            if (newPrice >= intialPrice.current && quantity >= 1) {
+                setIsDisabled(false);
+            }
+
+            return newPrice; // Trả về giá trị mới cho `price`
+        });
+
+        // Cập nhật `quantity`
+        setQuantity((prevQuantity) => prevQuantity + 1);
+    };
+    const minusPrice = () => {
+        setPrice((prevPrice) => {
+            if (prevPrice <= intialPrice.current) {
+                return prevPrice; // Không thay đổi giá trị price
+            } else {
+                return prevPrice - intialPrice.current; // Cập nhật giá trị price
+            }
+        });
+        setQuantity((prevQuantity) => {
+            if (prevQuantity <= 2) {
+                setIsDisabled(true);
+            }
+            if (prevQuantity <= 1) {
+                return prevQuantity;
+            } else {
+                return prevQuantity - 1;
+            }
+        });
+    };
+
+    const handleChangeQuantity = (e) => {
+        const value = Number(e.target.value);
+
+        if (value === 1) setIsDisabled(true);
+        else {
+            setIsDisabled(false);
+        }
+        if (isNaN(value) || value === 0) {
+            setQuantity('');
+            setPrice(intialPrice.current);
+
+            setIsDisabled(true);
+            return;
+        }
+        setQuantity(value);
+        setPrice(intialPrice.current * value);
+    };
+
     return (
         <div className={cx('wrapper')}>
             <Header />
 
-            <div className={cx('custom-container')}>
-                <BreadCumb />
-
+            <div className="custom-container-xxl d-xxl-block d-md-none d-lg-block d-xl-block ">
                 <div className={cx('main')}>
                     <div className={cx('sidebar-wrapper')}>
                         <div className={cx('sidebar')}>
@@ -78,7 +135,10 @@ function BookDetail({ books }) {
                             </div>
 
                             <div className={cx('highlight')}>
-                                <div className={cx('highlight-title')}>Đặc điểm nổi bật</div>
+                                {bookDetailResult?.highlight?.items.length > 0 &&
+                                    bookDetailResult?.highlight?.items && (
+                                        <div className={cx('highlight-title')}>Đặc điểm nổi bật</div>
+                                    )}
                                 <div className={cx('highlight-list')}>
                                     {bookDetailResult.highlight &&
                                         bookDetailResult.highlight.items &&
@@ -140,11 +200,7 @@ function BookDetail({ books }) {
                                     <div className={cx('rating-wrapper')}>
                                         <span className={cx('rating-average')}>{bookDetailResult.rating_average}</span>
                                         <span className={cx('star')}>
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
+                                            <StarRating rating={5} large />
                                         </span>
 
                                         <span className={cx('review-count')}>{bookDetailResult.review_text}</span>
@@ -196,11 +252,21 @@ function BookDetail({ books }) {
                             <div className={cx('quantity-input')}>
                                 <h4 className={cx('info-title')}> Số lượng </h4>
                                 <div className={cx('group-input')}>
-                                    <button className={cx('minus')}>
+                                    <button
+                                        className={cx('minus', {
+                                            isDisabled: isDisabled,
+                                        })}
+                                        onClick={minusPrice}
+                                    >
                                         <FontAwesomeIcon icon={faMinus} />
                                     </button>
-                                    <input className={cx('input')} type="text" value={1} />
-                                    <button className={cx('plus')}>
+                                    <input
+                                        className={cx('input')}
+                                        type="text"
+                                        value={quantity}
+                                        onChange={handleChangeQuantity}
+                                    />
+                                    <button className={cx('plus')} onClick={updatePrice}>
                                         <FontAwesomeIcon icon={faPlus} />
                                     </button>
                                 </div>
@@ -210,9 +276,8 @@ function BookDetail({ books }) {
                                 <h4 className={cx('info-title')}> Tạm tính </h4>
 
                                 <span className={cx('price-pay')}>
-                                    {bookDetailResult && bookDetailResult.price
-                                        ? formatCurrency(bookDetailResult.price)
-                                        : ''}
+                                    {formatCurrency(price)}
+
                                     <sup>₫</sup>
                                 </span>
                             </div>
@@ -227,7 +292,9 @@ function BookDetail({ books }) {
                 </div>
             </div>
 
-            <Footer />
+            <div className={cx('footer', ' d-xxl-block d-md-none d-lg-block d-xl-block')}>
+                <Footer />
+            </div>
         </div>
     );
 }

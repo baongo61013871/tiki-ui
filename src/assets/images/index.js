@@ -9,6 +9,11 @@ const images = {
     slider08: require('~/assets/images/slider8.png'),
     slider09: require('~/assets/images/slider9.png'),
     slider10: require('~/assets/images/slider10.png'),
+    logo: require('~/assets/images/logo-tiki.png'),
+    home: require('~/assets/images/home-icon.png'),
+    account: require('~/assets/images/account-icon.png'),
+    search: require('~/assets/images/search-icon.png'),
+    cart: require('~/assets/images/cart-icon.png'),
 };
 
 export default images;

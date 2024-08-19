@@ -1,9 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './ProductCard.module.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { formatCurrency } from '~/utils';
+import StarRating from '../StarRating';
 const cx = classNames.bind(styles);
 
 function ProductCard({ data }) {
@@ -23,11 +22,7 @@ function ProductCard({ data }) {
                 <p className={cx('title')}>{data.name}</p>
                 <div className={cx('actions')}>
                     <div className={cx('rating')}>
-                        <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                        <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                        <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                        <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                        <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
+                        <StarRating rating={5} small />
                     </div>
                     <span className={cx('sold')}>
                         {!data.quantity_sold || data.quantity_sold.text == null ? '0' : data.quantity_sold.text}

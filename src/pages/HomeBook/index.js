@@ -1,15 +1,14 @@
-import { useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 import styles from './HomeBook.module.scss';
 import Header from '~/components/Header';
 import ProductCard from '~/components/ProductCard';
 import Footer from '~/components/Footer';
-import BreadCumb from '~/components/BreadCumb';
+import StarRating from '~/components/StarRating';
 const cx = classNames.bind(styles);
 function Home({ books }) {
-    const productListFunc = useCallback(() => {
+    const productListFuncPC = () => {
         const chunkArray = (arr, chunkSize) => {
             const chunkedArray = [];
             for (let i = 0; i < arr.length; i += chunkSize) {
@@ -18,17 +17,27 @@ function Home({ books }) {
             return chunkedArray;
         };
         return chunkArray(books, 5);
-    }, [books]);
+    };
 
-    const productList = productListFunc();
+    const productListFuncTablet = () => {
+        const chunkArray = (arr, chunkSize) => {
+            const chunkedArray = [];
+            for (let i = 0; i < arr.length; i += chunkSize) {
+                chunkedArray.push(arr.slice(i, i + chunkSize));
+            }
+            return chunkedArray;
+        };
+        return chunkArray(books, 3);
+    };
+    const productListPC = productListFuncPC();
+    const productListTablet = productListFuncTablet();
     return (
         <div className={cx('wrapper')}>
             <Header />
-            <div className="container">
-                <BreadCumb />
+            <div className="custom-container-xxl">
                 <div className={cx('content')}>
                     <div className="row">
-                        <div className="col-lg-2">
+                        <div className="col-lg-2 d-none d-lg-block">
                             <div className={cx('category')}>
                                 <div className={cx('category-product')}>
                                     <h2 className={cx('title')}>Danh Mục Sản Phẩm</h2>
@@ -88,38 +97,29 @@ function Home({ books }) {
 
                                 <div className={cx('rating')}>
                                     <h2 className={cx('title')}>Đánh giá</h2>
-                                    <div className={cx('rating-wrapper')}>
-                                        <div className={cx('star')}>
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <span>từ 5 sao</span>
+
+                                    <div className={cx('star')}>
+                                        <div className={cx('star-wrapper')}>
+                                            <StarRating rating={5} large />
+                                            <span>Từ 5 sao</span>
                                         </div>
-                                        <div className={cx('star')}>
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-normal')} icon={faStar} />
-                                            <span>từ 4 sao</span>
+
+                                        <div className={cx('star-wrapper')}>
+                                            <StarRating rating={4} large />
+                                            <span>Từ 4 sao</span>
                                         </div>
-                                        <div className={cx('star')}>
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-gold')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-normal')} icon={faStar} />
-                                            <FontAwesomeIcon className={cx('star-normal')} icon={faStar} />
-                                            <span>từ 3 sao</span>
+                                        <div className={cx('star-wrapper')}>
+                                            <StarRating rating={3} large />
+                                            <span>Từ 3 sao</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-10">
-                            {productList.map((rowProduct) => (
-                                <div className="row g-3 mb-3">
+                        {/* PC */}
+                        <div className="col-lg-10 d-md-none d-sm-none d-none  d-lg-block">
+                            {productListPC.map((rowProduct) => (
+                                <div className="row g-3 mb-3 ">
                                     {rowProduct.map((result) => (
                                         <div className="col-lg-2-4">
                                             <div className={cx('product-card')}>
@@ -129,8 +129,49 @@ function Home({ books }) {
                                     ))}
                                 </div>
                             ))}
+                        </div>
 
-                            <ul className={cx('pagination')}>
+                        {/* Tablet */}
+                        <div className=" col-md-12 d-none d-lg-none d-sm-none d-md-block">
+                            {productListTablet.map((rowProduct) => (
+                                <div className="row g-3 mb-3 ">
+                                    {rowProduct.map((result) => (
+                                        <div className="col-md-4">
+                                            <div className={cx('product-card')}>
+                                                <ProductCard key={result.id} data={result} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
+                        {/* Mobile >= 576px */}
+                        <div className=" col-sm-12 col-12 d-none d-sm-block d-md-none d-lg-none">
+                            <div className="row g-3 mb-3 ">
+                                {books.map((result) => (
+                                    <div className=" col-sm-6">
+                                        <div className={cx('product-card')}>
+                                            <ProductCard key={result.id} data={result} />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        {/* Mobile <576px */}
+                        <div className="  col-12 d-block d-sm-none d-md-none d-lg-none">
+                            <div className="row g-3 mb-3 ">
+                                {books.map((result) => (
+                                    <div className="col-12">
+                                        <div className={cx('product-card')}>
+                                            <ProductCard key={result.id} data={result} />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        <div className="custom-container-xxl">
+                            <ul className={cx('pagination', 'd-xxl-flex d-xl-flex d-lg-flex d-md-none d-none')}>
                                 <li className={cx('pagination-item')}>
                                     <a href="/" className={cx('pagination-item-link', 'active')}>
                                         1

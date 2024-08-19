@@ -29,13 +29,26 @@ a[href] {
     text-decoration: none;
 }
 
+p.h1 {
+    font-size: 1.2rem;
+}
 @media (min-width: 992px) {
     .col-lg-2-4 {
         flex: 0 0 20%;
         width: 20%;
     }
 }
+@media (min-width: 1300px) and (max-width: 1440px) {
+    .custom-container-xxl {
+        max-width: 1280px !important;
+    }
+}
 
+@media (min-width: 992px) and (max-width: 1199px) {
+    .custom-container-xxl {
+        max-width: 960px !important;
+    }
+}
 .form-check-input {
     width: 14px;
     height: 14px;
@@ -43,4 +56,16 @@ a[href] {
 }
 .form-check-label {
     font-size: 12px;
+}
+
+.custom-container-xxl {
+    max-width: 1440px; /* Chỉnh lại theo kích thước bạn muốn */
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.custom-container-xl {
+    max-width: 1280px; /* Chỉnh lại theo kích thước bạn muốn */
+    margin: 0 auto;
+    padding: 0 15px;
 }

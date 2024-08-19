@@ -1,0 +1,20 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    span {
+        margin-left: 4px;
+    }
+    &.small {
+        font-size: 1rem;
+    }
+    &.large {
+        font-size: 1.2rem;
+    }
+}
+
+.star-gold {
+    color: #ffce3e;
+}
+.star-normal {
+    color: #b8b8b8;
+}

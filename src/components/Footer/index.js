@@ -6,8 +6,8 @@ const cx = classNames.bind(styles);
 
 function Footer() {
     return (
-        <div className={cx('wrapper')}>
-            <div className="container">
+        <div className={cx('wrapper', 'd-xxl-block d-xl-block d-lg-block d-md-none')}>
+            <div className="custom-container-xxl">
                 <div className={cx('section')}>
                     <div className="row g-4">
                         <div className="col-lg-2-4">
