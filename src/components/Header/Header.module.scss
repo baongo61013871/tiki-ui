@@ -40,18 +40,19 @@
     }
 }
 .search-input {
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
     flex: 90%;
     padding: 10px 20px 10px 50px;
     border: 1px solid #dddde3;
     border-right: none;
+    font-size: 1.5rem;
 }
 
 .search-btn {
     position: relative;
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
     border: 1px solid #dddde3;
     border-left: none;
     background-color: #fff;
@@ -97,6 +98,21 @@
         }
     }
 }
+// custom scrollbar search
+.search-popper ::-webkit-scrollbar {
+    border-radius: 0px;
+    width: 12px;
+}
+
+.search-popper ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(21, 22, 24, 0.08);
+}
+
+.search-popper ::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: rgba(21, 22, 24, 0.08);
+}
 
 @media (min-width: 1201px) and (max-width: 1300px) {
     .actions {
@@ -136,6 +152,12 @@
     display: flex;
 }
 .actions-btn {
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(39, 39, 42, 0.12);
+        border-radius: 10px;
+    }
     display: flex;
     justify-content: center;
     align-items: center;
@@ -143,8 +165,29 @@
     span {
         font-size: 1.4rem;
         margin-left: 4px;
+        user-select: none;
     }
     padding: 12px;
+}
+
+// account-popper
+.account-popper {
+    width: 240px;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 6px 12px 0;
+    background-color: #fff;
+    list-style: none;
+    padding: 10px 0;
+    border-radius: 10px;
+    li {
+        padding: 8px 16px;
+        .popper-link {
+            color: #000;
+            font-size: 1.4rem;
+        }
+        &:hover {
+            background-color: rgba(39, 39, 42, 0.12);
+        }
+    }
 }
 
 .cart-wrapper {

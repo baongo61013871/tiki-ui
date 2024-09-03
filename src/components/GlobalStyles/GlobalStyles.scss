@@ -17,6 +17,7 @@ body {
     line-height: 1.5;
     text-rendering: optimizeSpeed;
     background-color: #f5f5fa;
+    overflow: overlay;
 }
 
 input,
@@ -59,13 +60,13 @@ p.h1 {
 }
 
 .custom-container-xxl {
-    max-width: 1440px; /* Chỉnh lại theo kích thước bạn muốn */
+    max-width: 1440px;
     margin: 0 auto;
     padding: 0 15px;
 }
 
 .custom-container-xl {
-    max-width: 1280px; /* Chỉnh lại theo kích thước bạn muốn */
+    max-width: 1280px;
     margin: 0 auto;
     padding: 0 15px;
 }
@@ -73,20 +74,21 @@ p.h1 {
 // lớp overlay
 
 .overlay {
-    position: fixed; /* Phủ kín toàn bộ trang */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
-    z-index: 999; /* Đặt trên cùng */
-    display: none; /* Mặc định ẩn */
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
 }
 
 .overlay.show {
     display: block;
 }
 
+//  navbar mobile
 .navbar {
     padding: 0.5rem 1rem;
 }
@@ -102,6 +104,19 @@ p.h1 {
     margin-top: 10px;
 }
 /* Style to ensure dropdown covers the screen width */
-.dropdown-menu {
-    width: 100%;
+
+// custom body scroolbar
+html ::-webkit-scrollbar {
+    border-radius: 0px;
+    width: 14px;
+}
+
+html ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(21, 22, 24, 0.2);
+}
+
+html ::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: rgba(21, 22, 24, 0.08);
 }

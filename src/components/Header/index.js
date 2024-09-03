@@ -152,7 +152,7 @@ function Header() {
                                     onChange={handleChangeSearch}
                                     onKeyDown={handleKeyDown}
                                     onFocus={handleFocus} // Khi focus vào input, hiển thị overla
-                                    placeholder="Bạn mua gì hôm nay"
+                                    placeholder="Giao hàng nhanh 2H & đúng khung giờ"
                                     value={searchValue}
                                     ref={inputRef}
                                 />
@@ -167,10 +167,40 @@ function Header() {
                                     <img src={images.home} alt="home" />
                                     <span>Trang chủ</span>
                                 </Link>
-                                <Link className={cx('actions-btn')} to="/account">
-                                    <img src={images.account} alt="home" />
-                                    <span>Tài khoản</span>
-                                </Link>
+                                <Tippy
+                                    offset={[10, 0]}
+                                    placement="bottom-end"
+                                    interactive
+                                    render={(attrs) => (
+                                        <ul className={cx('account-popper')} tabIndex="-1" {...attrs}>
+                                            <li>
+                                                <Link className={cx('popper-link')} to="/account">
+                                                    Thông tin tài khoản
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link className={cx('popper-link')} to="/account">
+                                                    Đơn hàng của tôi
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link className={cx('popper-link')} to="/account">
+                                                    Trung tâm hỗ trợ
+                                                </Link>
+                                            </li>
+                                            <li>
+                                                <Link className={cx('popper-link')} to="/account">
+                                                    Đăng xuất
+                                                </Link>
+                                            </li>
+                                        </ul>
+                                    )}
+                                >
+                                    <div className={cx('actions-btn')}>
+                                        <img src={images.account} alt="home" />
+                                        <span>Tài khoản</span>
+                                    </div>
+                                </Tippy>
                             </div>
                             <span className={cx('separate-cart')}></span>
                             <div className={cx('cart-wrapper')}>
