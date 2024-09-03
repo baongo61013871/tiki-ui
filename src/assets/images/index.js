@@ -14,6 +14,7 @@ const images = {
     account: require('~/assets/images/account-icon.png'),
     search: require('~/assets/images/search-icon.png'),
     cart: require('~/assets/images/cart-icon.png'),
+    searchItem: require('~/assets/images/searchitem.png'),
 };
 
 export default images;

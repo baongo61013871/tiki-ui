@@ -1,6 +1,11 @@
 .wrapper {
     background-color: #fff;
     height: 88px;
+    z-index: 1000;
+    position: sticky;
+    left: 0;
+    right: 0;
+    top: 0;
 }
 
 .inner {
@@ -35,8 +40,8 @@
     }
 }
 .search-input {
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
     flex: 90%;
     padding: 10px 20px 10px 50px;
     border: 1px solid #dddde3;
@@ -45,8 +50,8 @@
 
 .search-btn {
     position: relative;
-    border-top-right-radius: 10px;
-    border-bottom-right-radius: 10px;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
     border: 1px solid #dddde3;
     border-left: none;
     background-color: #fff;
@@ -64,6 +69,33 @@
     position: absolute;
     left: -10px;
     top: 50%;
+}
+
+.search-popper {
+    top: 100%;
+    list-style: none; /* Xóa dấu chấm cho các mục */
+    padding: 0;
+    margin: 0;
+    background-color: #fff; /* Màu nền */
+    box-shadow: rgba(0, 0, 0, 0.28) 0px 6px 12px 0px; /* Đổ bóng */
+    max-height: 280px; /* Chiều cao tối đa */
+    overflow-y: auto; /* Hiển thị thanh cuộn khi có quá nhiều kết quả */
+    z-index: 1000; /* Đảm bảo nó nằm trên các phần tử khác */
+    box-sizing: border-box; /* Bao gồm padding và border trong chiều rộng */
+
+    li:hover {
+        background-color: rgba(39, 39, 42, 0.12);
+    }
+    a {
+        display: flex;
+        align-items: center;
+        .keyword {
+            color: #000;
+            font-size: 1.4rem;
+            padding-left: 4px;
+            padding-bottom: 4px;
+        }
+    }
 }
 
 @media (min-width: 1201px) and (max-width: 1300px) {
@@ -174,14 +206,24 @@
 @media (max-width: 375px) {
     .search-mobile {
         margin-left: 0 !important;
+        input {
+            padding-right: 0 !important;
+        }
     }
     .icon {
         padding-left: 0px !important;
+        .icon-left,
+        .icon-bars {
+            font-size: 1.4rem;
+        }
     }
     .inner-mobile {
         max-width: 375px !important; /* Chỉnh lại theo kích thước bạn muốn */
         flex: 20%;
         gap: 12px;
+    }
+    .cart {
+        padding-right: 20px;
     }
 }
 .container {
@@ -235,6 +277,7 @@
         padding: 6px 30px;
         font-size: 1.4rem;
         color: #808089;
+        border-radius: 4px;
     }
 }
 

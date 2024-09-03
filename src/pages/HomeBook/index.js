@@ -146,10 +146,10 @@ function Home({ books }) {
                             ))}
                         </div>
                         {/* Mobile >= 576px */}
-                        <div className=" col-sm-12 col-12 d-none d-sm-block d-md-none d-lg-none">
+                        <div className=" col-sm-12 col-12 d-block d-sm-block d-md-none d-lg-none">
                             <div className="row g-3 mb-3 ">
                                 {books.map((result) => (
-                                    <div className=" col-sm-6">
+                                    <div className=" col-sm-6 col-6">
                                         <div className={cx('product-card')}>
                                             <ProductCard key={result.id} data={result} />
                                         </div>
@@ -158,17 +158,6 @@ function Home({ books }) {
                             </div>
                         </div>
                         {/* Mobile <576px */}
-                        <div className="  col-12 d-block d-sm-none d-md-none d-lg-none">
-                            <div className="row g-3 mb-3 ">
-                                {books.map((result) => (
-                                    <div className="col-12">
-                                        <div className={cx('product-card')}>
-                                            <ProductCard key={result.id} data={result} />
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
 
                         <div className="custom-container-xxl">
                             <ul className={cx('pagination', 'd-xxl-flex d-xl-flex d-lg-flex d-md-none d-none')}>
