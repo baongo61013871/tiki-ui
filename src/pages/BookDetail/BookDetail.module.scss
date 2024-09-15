@@ -146,6 +146,7 @@
     display: flex;
     align-items: center;
     font-size: 1.3rem;
+    flex-wrap: wrap;
 }
 .author-label {
     margin-left: 4px;
@@ -353,6 +354,9 @@
         line-height: 1.4;
         font-weight: 300;
     }
+    .button:hover {
+        opacity: 0.8;
+    }
     .btn--primary {
         background-color: rgb(255, 66, 78);
         color: #fff;
@@ -411,4 +415,12 @@
     width: 70%;
     object-fit: contain;
     border: 1px solid #cbbfbf;
+}
+
+// toast message
+
+.toast-message {
+    margin-top: 60px;
+    margin-right: 30px;
+    display: block;
 }

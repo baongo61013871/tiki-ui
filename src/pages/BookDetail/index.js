@@ -1,7 +1,12 @@
 import { Link, useParams } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addItem } from '~/redux/cartSlice';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { toast, ToastContainer } from 'react-toastify';
+import CustomToast from '~/components/CustomToast/CustomToast';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     faCartShopping,
     faChevronLeft,
@@ -15,10 +20,11 @@ import styles from './BookDetail.module.scss';
 import Header from '~/components/Header';
 import request from '~/utils/request';
 import images from '~/assets/images';
-import { formatCurrency } from '~/utils';
+import { formatCurrency, FilterInfoBadge } from '~/utils';
+
 import Footer from '~/components/Footer';
 import StarRating from '~/components/StarRating';
-
+import BreadCumb from '~/components/BreadCumb';
 const cx = classNames.bind(styles);
 
 function BookDetail({ books }) {
@@ -28,9 +34,12 @@ function BookDetail({ books }) {
     const [price, setPrice] = useState(0);
     const [quantity, setQuantity] = useState(1);
     const [isDisabled, setIsDisabled] = useState(true);
-    const authIcon = bookDetailResult?.badges_new?.find((item) => {
-        return item.placement === 'left_brand';
+    const dispatch = useDispatch();
+    const authIcon = bookDetailResult?.badges_new?.filter((item) => {
+        return item.icon !== null;
     });
+    // saiiiiiiiiiiiiiiiiiiiii
+    const badgesNew_v2 = FilterInfoBadge(book?.badges_new);
     const intialPrice = useRef(0);
 
     useEffect(() => {
@@ -52,7 +61,7 @@ function BookDetail({ books }) {
         fetchApi();
     }, [id]);
 
-    if (!book) {
+    if (!bookDetailResult) {
         return <h2>Không tìm thấy sách!</h2>;
     }
 
@@ -108,11 +117,26 @@ function BookDetail({ books }) {
         setQuantity(value);
         setPrice(intialPrice.current * value);
     };
-
+    const handleAddToCart = (bookData) => {
+        dispatch(
+            addItem({
+                id: bookData.id,
+                badges_new: bookData.badges_new,
+                price: bookData.price,
+                thumbnail_url: bookData.thumbnail_url,
+                quantity: quantity,
+                authIcon: authIcon,
+                name: bookData.name,
+                badgesNew_v2: badgesNew_v2,
+            }),
+        );
+        toast.success(<CustomToast />);
+    };
     return (
         <>
             <div className={cx('wrapper', 'd-xxl-block d-md-block d-lg-block d-xl-block d-none ')}>
                 <Header />
+                <BreadCumb />
 
                 <div className="custom-container-xxl">
                     <div className={cx('main')}>
@@ -186,12 +210,15 @@ function BookDetail({ books }) {
                                 <div className={cx('intro')}>
                                     <div className={cx('author')}>
                                         {authIcon && authIcon !== undefined ? (
-                                            <img
-                                                src={authIcon.icon}
-                                                alt="auth-icon"
-                                                width={authIcon.icon_width}
-                                                height={authIcon.icon_height}
-                                            />
+                                            authIcon.map((authItem) => (
+                                                <img
+                                                    className="me-2"
+                                                    src={authItem.icon}
+                                                    alt="auth-icon"
+                                                    width={authItem.icon_width}
+                                                    height={authItem.icon_height}
+                                                />
+                                            ))
                                         ) : (
                                             <></>
                                         )}
@@ -295,7 +322,12 @@ function BookDetail({ books }) {
 
                                 <div className={cx('group-button')}>
                                     <button className={cx('button', 'btn--primary')}>Mua ngay</button>
-                                    <button className={cx('button', 'btn--normal')}>Thêm vào giỏ</button>
+                                    <button
+                                        className={cx('button', 'btn--normal')}
+                                        onClick={() => handleAddToCart(bookDetailResult)}
+                                    >
+                                        Thêm vào giỏ
+                                    </button>
                                     <button className={cx('button', 'btn--normal')}>Mua trước trả sau</button>
                                 </div>
                             </div>
@@ -333,12 +365,15 @@ function BookDetail({ books }) {
                         <div className="d-flex flex-column gap-1">
                             <div className={cx('auth')}>
                                 {authIcon && authIcon !== undefined ? (
-                                    <img
-                                        src={authIcon.icon}
-                                        alt="auth-icon"
-                                        width={authIcon.icon_width}
-                                        height={authIcon.icon_height}
-                                    />
+                                    authIcon.map((authItem) => (
+                                        <img
+                                            className="me-2"
+                                            src={authItem.icon}
+                                            alt="auth-icon"
+                                            width={authItem.icon_width}
+                                            height={authItem.icon_height}
+                                        />
+                                    ))
                                 ) : (
                                     <></>
                                 )}
@@ -428,6 +463,18 @@ function BookDetail({ books }) {
                     </div>
                 </div>
             </div>
+            <ToastContainer
+                className={cx('toast-message')}
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={true}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
         </>
     );
 }

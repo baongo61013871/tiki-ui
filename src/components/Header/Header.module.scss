@@ -73,6 +73,7 @@
 }
 
 .search-popper {
+    border-radius: 6px;
     top: 100%;
     list-style: none; /* Xóa dấu chấm cho các mục */
     padding: 0;
@@ -191,9 +192,15 @@
 }
 
 .cart-wrapper {
-    position: relative;
     cursor: pointer;
     display: flex;
+    padding: 8px;
+    background-color: transparent;
+    border-radius: 8px;
+}
+
+.cart-wrapper:hover {
+    background-color: rgba(0, 96, 255, 0.12);
 }
 
 // common
@@ -209,8 +216,9 @@
     color: rgb(255, 255, 255);
     background: rgb(255, 66, 79);
     height: 16px;
-    right: -6px;
-    top: -12px;
+    width: 15px;
+    right: -8px;
+    top: -13px;
     border-radius: 8px;
     display: inline-block;
     text-align: center;
@@ -237,13 +245,17 @@
 }
 
 .cart-wrapper-md {
-    position: relative;
+    border-radius: 8px;
     img {
         width: 32px;
         height: 32px;
     }
+    padding: 6px;
 }
 
+.cart-wrapper-md:hover {
+    background-color: rgba(0, 96, 255, 0.12);
+}
 // mobile
 
 @media (max-width: 375px) {

@@ -1,4 +1,5 @@
 import { useContext, useState, useRef, useEffect, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faBars, faSearch, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
@@ -10,7 +11,6 @@ import classNames from 'classnames/bind';
 
 import styles from './Header.module.scss';
 import { BookContext } from '~/App';
-import BreadCumb from '../BreadCumb';
 import images from '~/assets/images';
 import NavBar from '~/components/NavBar';
 const cx = classNames.bind(styles);
@@ -23,6 +23,8 @@ function Header() {
     const [isVisible, setIsVisible] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(-1); // Vị trí mục đang được chọn
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const totalQuantity = useSelector((state) => state.cart.totalQuantity);
+
     const fuseOptions = {
         keys: ['name'], // Các trường tìm kiếm
         threshold: 0.3, // Ngưỡng tìm kiếm mờ (0.0 chính xác, 1.0 tìm kiếm rất mờ)
@@ -203,18 +205,22 @@ function Header() {
                                 </Tippy>
                             </div>
                             <span className={cx('separate-cart')}></span>
-                            <div className={cx('cart-wrapper')}>
-                                <img src={images.cart} alt="cart" />
-                                <span className={cx('order-quantity')}>0</span>
-                            </div>
+                            <Link className={cx('cart-wrapper', 'd-block')} to="/checkout/cart">
+                                <div className="position-relative">
+                                    <img src={images.cart} alt="cart" />
+                                    <span className={cx('order-quantity')}>{totalQuantity}</span>
+                                </div>
+                            </Link>
                         </div>
                         {/* tablet <990px */}
 
                         <div className={cx('actions-tablet-mini', 'd-xl-none d-md-flex d-lg-none d-xxl-none')}>
-                            <div className={cx('cart-wrapper-md', 'd-md-flex d-lg-none')}>
-                                <img src={images.cart} alt="cart" />
-                                <span className={cx('order-quantity')}>0</span>
-                            </div>
+                            <Link className={cx('cart-wrapper-md', 'd-md-flex d-lg-none')} to="/checkout/cart">
+                                <span className="position-relative">
+                                    <img src={images.cart} alt="cart" />
+                                    <span className={cx('order-quantity')}>{totalQuantity}</span>
+                                </span>
+                            </Link>
                         </div>
                     </div>
                 </div>
@@ -246,13 +252,11 @@ function Header() {
                     </div>
 
                     <span className={cx('cart')}>
-                        <span className={cx('order-quantity')}>0</span>
+                        <span className={cx('order-quantity')}>{totalQuantity}</span>
                         <FontAwesomeIcon icon={faCartShopping} />
                     </span>
                 </div>
             </div>
-
-            <BreadCumb />
         </div>
     );
 }
