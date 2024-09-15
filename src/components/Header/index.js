@@ -24,9 +24,9 @@ function Header() {
     const [selectedIndex, setSelectedIndex] = useState(-1); // Vị trí mục đang được chọn
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-
+    console.log('check boookkkkkk', books);
     const fuseOptions = {
-        keys: ['name'], // Các trường tìm kiếm
+        keys: ['name', 'description'], // Các trường tìm kiếm
         threshold: 0.3, // Ngưỡng tìm kiếm mờ (0.0 chính xác, 1.0 tìm kiếm rất mờ)
     };
 

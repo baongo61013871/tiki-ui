@@ -19,9 +19,7 @@ import {
 import styles from './BookDetail.module.scss';
 import Header from '~/components/Header';
 import request from '~/utils/request';
-import images from '~/assets/images';
 import { formatCurrency, FilterInfoBadge } from '~/utils';
-
 import Footer from '~/components/Footer';
 import StarRating from '~/components/StarRating';
 import BreadCumb from '~/components/BreadCumb';
@@ -38,7 +36,7 @@ function BookDetail({ books }) {
     const authIcon = bookDetailResult?.badges_new?.filter((item) => {
         return item.icon !== null;
     });
-    // saiiiiiiiiiiiiiiiiiiiii
+    console.log(bookDetailResult);
     const badgesNew_v2 = FilterInfoBadge(book?.badges_new);
     const intialPrice = useRef(0);
 
@@ -53,7 +51,7 @@ function BookDetail({ books }) {
                 }
             };
             const result = await getDetail();
-
+            
             setBookDetailResult(result);
             setPrice(result.price);
             intialPrice.current = result.price;
@@ -145,25 +143,21 @@ function BookDetail({ books }) {
                                 <div className={cx('image-wrapper')}>
                                     <img className={cx('image')} src={bookDetailResult.thumbnail_url} alt="product" />
                                     <div className={cx('slider')}>
-                                        <a href="#image">
-                                            <img className={cx('slider-img')} src={images.slider01} alt="hello" />
-                                        </a>
-                                        <a href="#image">
-                                            <img className={cx('slider-img')} src={images.slider02} alt="hello" />
-                                        </a>
-                                        <a href="#image">
-                                            <img className={cx('slider-img')} src={images.slider03} alt="hello" />
-                                        </a>
-                                        <a href="#image">
-                                            <img className={cx('slider-img')} src={images.slider04} alt="hello" />
-                                        </a>
-
-                                        <a href="#image">
-                                            <img className={cx('slider-img')} src={images.slider05} alt="hello" />
-                                        </a>
-                                        <a href="#image">
-                                            <img className={cx('slider-img')} src={images.slider06} alt="hello" />
-                                        </a>
+                                        {bookDetailResult?.images &&
+                                        bookDetailResult.images.length > 0 &&
+                                        bookDetailResult.images.length < 6 ? (
+                                            bookDetailResult.images.map((image) => (
+                                                <a href="#image">
+                                                    <img
+                                                        className={cx('slider-img')}
+                                                        src={image.base_url}
+                                                        alt="hello"
+                                                    />
+                                                </a>
+                                            ))
+                                        ) : (
+                                            <></>
+                                        )}
                                     </div>
                                 </div>
 
