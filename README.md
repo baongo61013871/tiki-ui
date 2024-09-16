@@ -10,7 +10,9 @@ If you encounter bugs, it may be due to CORS policy, you should use Chrome's COR
   - Show detail book's info
   - Image Slider
   - Add to Cart
-
+-Cart:
+   - Show cart details
+   - Handle create, update, delete item
 -Home page:
   - Show product list
   - Filter by suppliers
