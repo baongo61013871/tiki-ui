@@ -1,5 +1,11 @@
 <<<<<<< HEAD
-![Uploading image.png…]()
+
+![image](https://github.com/user-attachments/assets/e4158033-56d4-4a5d-8fbe-42655cdfd580)
+
+![image](https://github.com/user-attachments/assets/2b18a012-a5c6-48a6-85a3-94e0a1540056)
+
+![image](https://github.com/user-attachments/assets/8c088b4b-3c0f-47b0-8e55-0824b658b04b)
+
 
 # Tiki Clone Project.
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -63,29 +69,3 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-=======
-# tiki-ui
->>>>>>> 8d5eb4b1705ba462034b210bedcca43c20351d11
